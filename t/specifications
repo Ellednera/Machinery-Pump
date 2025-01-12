@@ -1,10 +1,10 @@
 Classname: Machinery::Pump
 Attributes
-    [] pump_id
-    [] designed_flowrate
-    [] rps
+    [v] pump_id
+    [v] designed_flowrate
+    [v] rps
     [] spin_flow_ratio # calculated in the module
-    [] remote_control # bool
+    [v] remote_control # bool
     [] status # bool
     
     [] inlet # future use, connect a pipe object
@@ -13,14 +13,14 @@ Attributes
     [] pressure_gauge # future use, connect a 
     
 Methods
-    [] new # constructor
-    [] pump_id
+    [v] new # constructor
+    [v] pump_id
         read-only
-    [] designed_flowrate
+    [v] designed_flowrate
         get and set
-    [] rps
+    [v] rps
         get and set
-    [] remote_control
+    [v] remote_control
         get and set
     [] status
         get and set
