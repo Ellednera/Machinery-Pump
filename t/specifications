@@ -1,0 +1,34 @@
+Classname: Machinery::Pump
+Attributes
+    [] pump_id
+    [] designed_flowrate
+    [] rps
+    [] spin_flow_ratio # calculated in the module
+    [] remote_control # bool
+    [] status # bool
+    
+    [] inlet # future use, connect a pipe object
+    [] outlet #  future use, connect a pipe object
+    [] medium # future use, an object
+    [] pressure_gauge # future use, connect a 
+    
+Methods
+    [] new # constructor
+    [] pump_id
+        read-only
+    [] designed_flowrate
+        get and set
+    [] rps
+        get and set
+    [] remote_control
+        get and set
+    [] status
+        get and set
+    
+    [] inlet
+    [] outlet
+    [] medium
+    [] pressure_gauge    
+    [] pump
+        pump the medium for one time ie one blade spin
+        returns pumped volume per spin
