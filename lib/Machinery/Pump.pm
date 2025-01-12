@@ -4,9 +4,11 @@ use 5.006;
 use strict;
 use warnings;
 
+use Carp qw( croak );
+
 =head1 NAME
 
-Machinery::Pump - The great new Machinery::Pump!
+Machinery::Pump - A general pump 
 
 =head1 VERSION
 
@@ -28,25 +30,123 @@ Perhaps a little code snippet.
     my $foo = Machinery::Pump->new();
     ...
 
-=head1 EXPORT
-
-A list of functions that can be exported.  You can delete this section
-if you don't export anything, such as for a purely object-oriented module.
-
 =head1 SUBROUTINES/METHODS
 
-=head2 function1
+=head2 new( \%options )
+
+Creates a new pump. For C<%options>, only  I<pump_id> is required, see below for more details.
+
+=over 4
+
+=item designed_flowrate => $numerical
+
+The designed flowrate of the pump
+
+=item rps => $integer
+
+The blade spin rate in round per second
+
+=item remote_control => $bool
+
+The ability to control the pump through the DCS
+
+=item status = 0
+
+The status of the pump. This value is always set to 0 upon creation to indicate it is not running. This value can be changed by calling the I<status> method.
+
+=back
 
 =cut
 
-sub function1 {
+sub new {
+    my ( $class, $pump_details ) = @_;
+    
+    # required keys
+    if ( !$pump_details->{ pump_id } ) {
+        croak "Missing key: pump_id";
+    }
+    
+    # optional keys
+    $pump_details->{ designed_flowrate } = 13 if not exists $pump_details->{ designed_flowrate };
+    $pump_details->{ rps } = 2900 if not exists $pump_details->{ rps };
+   
+   $pump_details->{ remote_control } = "yes" if not exists $pump_details->{ remote_control };
+   
+   if ( $pump_details->{ remote_control } ne "yes" && $pump_details->{ remote_control } ne "no" ) {
+        croak "Invalid value for remote_control";
+   }
+   
+   $pump_details->{ status } = 0 if not exists $pump_details->{ status };
+   croak "Danger! Can't run pump during creation..." if $pump_details->{ status };
+   
+   bless $pump_details, $class;
 }
 
-=head2 function2
+
+=head2 pump_id
+
+Returns the pump id
 
 =cut
 
-sub function2 {
+sub pump_id {
+    my $pump = shift;
+    $pump->{ pump_id };
+}
+
+=head2 designed_flowrate( [ $numerical ] )
+
+Gets or sets the designed flowrate, the unit is assumed to be I<m^3 / h>
+
+=cut
+
+sub designed_flowrate {
+    my ( $class, $flowrate ) = @_;
+    
+    if ( $flowrate ) {
+        $class->{ designed_flowrate } = $flowrate;
+    } else {
+        $class->{ designed_flowrate }
+    }
+    
+}
+
+=head2 rps( [ $integer ] )
+
+Gets of sets the rps, the unit is assumed to be in I<seconds>
+
+=cut
+
+sub rps {
+    my ( $class, $rps ) = @_;
+    
+    if ( $rps ) {
+        $class->{ rps } = $rps;
+    } else {
+        $class->{ rps }
+    }
+    
+}
+
+=head2 remote_control( [ "yes" | "no" ] )
+
+Gets of sets the ability to control the pump remotely.
+
+=cut
+
+sub remote_control {
+    my ( $class, $remote_control ) = @_;
+    
+    if ( defined $remote_control) {
+        if ( $remote_control eq "yes" || $remote_control eq "no" ) {
+            $class->{ remote_control } = $remote_control;
+        } else {
+            croak "Invalid value for remote_control";
+        }
+        
+    } else {
+        $class->{ remote_control }
+    }
 }
 
 =head1 AUTHOR
@@ -90,6 +190,7 @@ L<https://metacpan.org/release/Machinery-Pump>
 
 =head1 ACKNOWLEDGEMENTS
 
+Besiyata d'shmaya
 
 =head1 LICENSE AND COPYRIGHT
 

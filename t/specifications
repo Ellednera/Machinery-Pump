@@ -24,6 +24,8 @@ Methods
         get and set
     [] status
         get and set
+    [] toggle
+        sets status between on and off
     
     [] inlet
     [] outlet

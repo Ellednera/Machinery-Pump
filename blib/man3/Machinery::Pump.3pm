@@ -77,7 +77,7 @@
 .if n .ad l
 .nh
 .SH "NAME"
-Machinery::Pump \- The great new Machinery::Pump!
+Machinery::Pump \- A general pump
 .SH "VERSION"
 .IX Header "VERSION"
 Version 0.01
@@ -93,16 +93,41 @@ Perhaps a little code snippet.
 \&    my $foo = Machinery::Pump\->new();
 \&    ...
 .Ve
-.SH "EXPORT"
-.IX Header "EXPORT"
-A list of functions that can be exported.  You can delete this section
-if you don't export anything, such as for a purely object-oriented module.
 .SH "SUBROUTINES/METHODS"
 .IX Header "SUBROUTINES/METHODS"
-.SS "function1"
-.IX Subsection "function1"
-.SS "function2"
-.IX Subsection "function2"
+.SS "new( \e%options )"
+.IX Subsection "new( %options )"
+Creates a new pump. For \f(CW%options\fR, only  \fIpump_id\fR is required, see below for more details.
+.ie n .IP "designed_flowrate => $numerical" 4
+.el .IP "designed_flowrate => \f(CW$numerical\fR" 4
+.IX Item "designed_flowrate => $numerical"
+The designed flowrate of the pump
+.ie n .IP "rps => $integer" 4
+.el .IP "rps => \f(CW$integer\fR" 4
+.IX Item "rps => $integer"
+The blade spin rate in round per second
+.ie n .IP "remote_control => $bool" 4
+.el .IP "remote_control => \f(CW$bool\fR" 4
+.IX Item "remote_control => $bool"
+The ability to control the pump through the \s-1DCS\s0
+.IP "status = 0" 4
+.IX Item "status = 0"
+The status of the pump. This value is always set to 0 upon creation to indicate it is not running. This value can be changed by calling the \fIstatus\fR method.
+.SS "pump_id"
+.IX Subsection "pump_id"
+Returns the pump id
+.ie n .SS "designed_flowrate( [ $numerical ] )"
+.el .SS "designed_flowrate( [ \f(CW$numerical\fP ] )"
+.IX Subsection "designed_flowrate( [ $numerical ] )"
+Gets or sets the designed flowrate, the unit is assumed to be \fIm^3 / h\fR
+.ie n .SS "rps( [ $integer ] )"
+.el .SS "rps( [ \f(CW$integer\fP ] )"
+.IX Subsection "rps( [ $integer ] )"
+Gets of sets the rps, the unit is assumed to be in \fIseconds\fR
+.ie n .SS "remote_control( [ ""yes"" | ""no"" ] )"
+.el .SS "remote_control( [ ``yes'' | ``no'' ] )"
+.IX Subsection "remote_control( [ yes | no ] )"
+Gets of sets the ability to control the pump remotely.
 .SH "AUTHOR"
 .IX Header "AUTHOR"
 Raphael Jong Jun Jie, \f(CW\*(C`<ellednera at cpan.org>\*(C'\fR
@@ -134,6 +159,7 @@ Search \s-1CPAN\s0
 <https://metacpan.org/release/Machinery\-Pump>
 .SH "ACKNOWLEDGEMENTS"
 .IX Header "ACKNOWLEDGEMENTS"
+Besiyata d'shmaya
 .SH "LICENSE AND COPYRIGHT"
 .IX Header "LICENSE AND COPYRIGHT"
 This software is Copyright (c) 2025 by Raphael Jong Jun Jie.
